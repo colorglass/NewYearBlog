@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>首页</title>
+    <title>文章</title>
 
     <link rel="stylesheet" href="../static/lib/bootstrap4/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/typo.css">
@@ -419,17 +419,14 @@
 
                 <!-- comment -->
                 <hr>
-                <h4 class="text-center">留言</h4>
+                <h4 class="text-center">留言数：<span class="text-info">12</span></h4>
                 <hr>
-
                 <div class="d-flex flex-column">
                     <ul class="list-unstyled">
                         <li class="media my-2 border-bottom">
                             <div class="meida-body w-100">
                                 <div class="d-flex">
                                     <h5 class=" mt-0 mb-1">Jack</h5>
-                                    <p class=" text-muted ml-5"><i
-                                            class="bi bi-envelope-fill mr-1"></i>2523535156@qq.com</p>
                                     <p class=" text-muted ml-auto"><i
                                             class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
                                 </div>
@@ -440,8 +437,6 @@
                             <div class="meida-body w-100">
                                 <div class="d-flex">
                                     <h5 class=" mt-0 mb-1">Jack</h5>
-                                    <p class=" text-muted ml-5"><i
-                                            class="bi bi-envelope-fill mr-1"></i>2523535156@qq.com</p>
                                     <p class=" text-muted ml-auto"><i
                                             class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
                                 </div>
@@ -452,8 +447,6 @@
                             <div class="meida-body w-100">
                                 <div class="d-flex">
                                     <h5 class=" mt-0 mb-1">Jack</h5>
-                                    <p class=" text-muted ml-5"><i
-                                            class="bi bi-envelope-fill mr-1"></i>2523535156@qq.com</p>
                                     <p class=" text-muted ml-auto"><i
                                             class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
                                 </div>
@@ -464,8 +457,6 @@
                             <div class="meida-body w-100">
                                 <div class="d-flex">
                                     <h5 class=" mt-0 mb-1">Jack</h5>
-                                    <p class=" text-muted ml-5"><i
-                                            class="bi bi-envelope-fill mr-1"></i>2523535156@qq.com</p>
                                     <p class=" text-muted ml-auto"><i
                                             class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
                                 </div>
@@ -476,8 +467,26 @@
                             <div class="meida-body w-100">
                                 <div class="d-flex">
                                     <h5 class=" mt-0 mb-1">Jack</h5>
-                                    <p class=" text-muted ml-5"><i
-                                            class="bi bi-envelope-fill mr-1"></i>2523535156@qq.com</p>
+                                    <p class=" text-muted ml-auto"><i
+                                            class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
+                                </div>
+                                <p class="my-2">balbala</p>
+                            </div>
+                        </li>
+                        <li class="media my-2 border-bottom">
+                            <div class="meida-body w-100">
+                                <div class="d-flex">
+                                    <h5 class=" mt-0 mb-1">Jack</h5>
+                                    <p class=" text-muted ml-auto"><i
+                                            class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
+                                </div>
+                                <p class="my-2">balbala</p>
+                            </div>
+                        </li>
+                        <li class="media my-2 border-bottom">
+                            <div class="meida-body w-100">
+                                <div class="d-flex">
+                                    <h5 class=" mt-0 mb-1">Jack</h5>
                                     <p class=" text-muted ml-auto"><i
                                             class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
                                 </div>
@@ -485,22 +494,7 @@
                             </div>
                         </li>
                     </ul>
-                    <!-- <form class="needs-validation" action="">
-                        <div class="form-group">
-                            <textarea class="form-control"  name="" id="" cols="30" rows="3" placeholder="请发表一条善意的留言" required></textarea>
-                            <div class="valid-feedback">
-                                请务必填写留言
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" type="email" placeholder="请输入邮箱" required>
-                            <div class="valid-feedback">
-                                请务必填写邮箱
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" type="submit">发表留言</button>
-                    </form> -->
-                    <form action="#" class="needs-validation" novalidate>
+                    <form action="#" class="needs-validation mt-5" novalidate>
                         <div class="form-row">
                             <div class="col mb-3">
                                 <label for="comment-content">留言框</label>
@@ -511,10 +505,17 @@
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-6 mb-3">
-                                <label for="comment-email">你的邮箱</label>
+                                <label for="comment-email">你的邮箱(不会展示)</label>
                                 <input type="email" class="form-control" id="comment-email" required>
                                 <div class="invalid-feedback">
-                                    请务必正确的邮箱地址
+                                    请务必输入正确的邮箱地址
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="comment-email">你的昵称</label>
+                                <input type="text" class="form-control" id="comment-nickname" required>
+                                <div class="invalid-feedback">
+                                    请务必输入昵称
                                 </div>
                             </div>
                         </div>
@@ -523,7 +524,6 @@
                 </div>
 
             </div>
-
 
         </div>
 

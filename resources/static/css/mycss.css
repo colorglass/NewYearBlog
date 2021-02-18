@@ -1,3 +1,5 @@
-.selector-for-some-widget {
-    box-sizing: content-box;
-  }
+.footer-position{
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+}
