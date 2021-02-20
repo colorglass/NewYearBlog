@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>新建文章</title>
+
+    <link rel="stylesheet" href="../../static/lib/bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/lib/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand h4" href="#">后台管理</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item mr-2">
+                        <a class="nav-link " href="#">博客</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#">标签和分类</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#">留言</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">数据</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-reset" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        幻丶象
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">退出登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container px-md-5 py-5">
+        <form action="" >
+            <div class="form-group">
+                <div class="input-group input-group-lg mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">标题</span>
+                    </div>
+                    <input type="text" id="title" class="form-control" placeholder="请输入标题..." required>
+                </div>
+            </div>
+
+            <div id="test-editormd">
+                <textarea style="display:none;">
+            [TOC]
+    
+    #### Disabled options
+    
+    - TeX (Based on KaTeX);
+    - Emoji;
+    - Task lists;
+    - HTML tags decode;
+    - Flowchart and Sequence Diagram;
+    
+    #### Editor.md directory
+    
+                </textarea>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <h5 class="text-muted">选择分类</h5>
+                    <div class="form-group">
+                        <select class="form-control w-100" id="sort" aria-label="Example select with button addon"
+                            required>
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            请选择分类
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="text-muted">选择标签</h5>
+            <div class="d-flex border rounded p-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1">标签1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                    <label class="form-check-label" for="inlineCheckbox2">标签2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                    <label class="form-check-label" for="inlineCheckbox3">标签3</label>
+                </div>
+            </div>
+
+            <div class="d-flex mt-4 ">
+                <a href="#" class="btn btn-outline-danger mx-2 mr-auto">退出</a>
+                <button type="submit" class="btn btn-outline-info mx-2 ">保存</button>
+                <button type="submit" class="btn btn-outline-success mx-2">发布</button>
+            </div>
+        </form>
+    </main>
+
+
+    <script src="../../static/lib/jquery-3.5.1.js"></script>
+    <script src="../../static/lib/bootstrap4/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/lib/editormd/editormd.min.js"></script>
+    <script>
+        var testEditor;
+
+        $(function () {
+            testEditor = editormd("test-editormd", {
+                height: 640,
+                syncScrolling: "single",
+                path: "../../static/lib/editormd/lib/"
+            });
+        });
+    </script>
+</body>
+
+</html>
