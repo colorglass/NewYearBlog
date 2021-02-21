@@ -1,1 +1,6 @@
-
+spring:
+  profiles:
+    active:
+    - dev
+  freemarker:
+    suffix: .html

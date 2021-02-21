@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>管理-博文</title>
+
+    <link rel="stylesheet" href="/lib/bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand h4" href="#">后台管理</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item mr-2 active">
+                        <a class="nav-link " href="#">博客</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#">标签和分类</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#">留言</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">数据</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-reset" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        幻丶象
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">退出登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-lg py-5 h-100 px-lg-5">
+        <h3 class="text-center">博文数：<span class="text-info">12</span></h3>
+
+        <div class="d-flex my-4">
+            <a class="btn btn-primary px-3 mr-3" data-toggle="collapse" href="#">
+                新建
+            </a>
+            <button class="btn btn-secondary px-3" type="button" data-toggle="collapse" data-target="#search">
+                搜索
+            </button>
+        </div>
+        <div class="collapse my-2 border py-3" id="search">
+            <form class="form-inline w-100" action="">
+                <div class="col-md-4 col-6">
+                    <h5 class="mb-3 text-muted">选择分类</h5>
+                    <select class="custom-select w-100" id="sort" aria-label="Example select with button addon">
+                        <option selected>Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-md-4 col-6">
+                    <h5 class="mb-3 text-muted">选择标签</h5>
+                    <select class="custom-select w-100" id="tag" aria-label="Example select with button addon">
+                        <option selected>Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-md-4 col-6 mt-md-0 mt-4">
+                    <h5 class="mb-3 text-muted">输入标题</h5>
+                    <input class="form-control w-100" type="text" placeholder="任何标题" id="title">
+                </div>
+                <div class="col-6 d-md-flex mt-4">
+                    <button type="submit" class="btn btn-outline-secondary">搜索</button>
+                </div>
+            </form>
+        </div>
+
+        <ul class="list-group my-5">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-9 mb-3 mb-md-3">
+                        <h4 class="mb-4 mt-2">标题1</h4>
+                        <div class="row">
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i
+                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
+                                    <small class="mr-1">Java</small>
+                                    <small class="mr-1">C++</small>
+                                    <small class="mr-1">Python</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center justify-content-end">
+                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
+                            删除
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mr-auto"
+                                            data-dismiss="modal">关闭</button>
+                                        <a href="#" class="btn btn-danger">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-9 mb-3 mb-md-3">
+                        <h4 class="mb-4 mt-2">标题1</h4>
+                        <div class="row">
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i
+                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
+                                    <small class="mr-1">Java</small>
+                                    <small class="mr-1">C++</small>
+                                    <small class="mr-1">Python</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center justify-content-end">
+                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
+                            删除
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mr-auto"
+                                            data-dismiss="modal">关闭</button>
+                                        <a href="#" class="btn btn-danger">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-9 mb-3 mb-md-3">
+                        <h4 class="mb-4 mt-2">标题1</h4>
+                        <div class="row">
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i
+                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
+                                    <small class="mr-1">Java</small>
+                                    <small class="mr-1">C++</small>
+                                    <small class="mr-1">Python</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center justify-content-end">
+                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
+                            删除
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mr-auto"
+                                            data-dismiss="modal">关闭</button>
+                                        <a href="#" class="btn btn-danger">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-9 mb-3 mb-md-3">
+                        <h4 class="mb-4 mt-2">标题1</h4>
+                        <div class="row">
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i
+                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
+                                    <small class="mr-1">Java</small>
+                                    <small class="mr-1">C++</small>
+                                    <small class="mr-1">Python</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center justify-content-end">
+                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
+                            删除
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mr-auto"
+                                            data-dismiss="modal">关闭</button>
+                                        <a href="#" class="btn btn-danger">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-9 mb-3 mb-md-3">
+                        <h4 class="mb-4 mt-2">标题1</h4>
+                        <div class="row">
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i
+                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
+                                    <small class="mr-1">Java</small>
+                                    <small class="mr-1">C++</small>
+                                    <small class="mr-1">Python</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center justify-content-end">
+                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
+                            删除
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mr-auto"
+                                            data-dismiss="modal">关闭</button>
+                                        <a href="#" class="btn btn-danger">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-9 mb-3 mb-md-3">
+                        <h4 class="mb-4 mt-2">标题1</h4>
+                        <div class="row">
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i
+                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
+                                    <small class="mr-1">Java</small>
+                                    <small class="mr-1">C++</small>
+                                    <small class="mr-1">Python</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center justify-content-end">
+                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
+                            删除
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mr-auto"
+                                            data-dismiss="modal">关闭</button>
+                                        <a href="#" class="btn btn-danger">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
+                    <li class="page-item disabled"><a class="page-link text-monospace" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </main>
+
+
+    <script src="/lib/jquery-3.5.1.js"></script>
+    <script src="/lib/bootstrap4/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

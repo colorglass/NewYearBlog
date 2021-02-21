@@ -1,0 +1,13 @@
+.siderbar {
+    position: fixed;
+}
+
+.header {
+    margin: 10px auto;
+    height: 30px;
+}
+
+.header img {
+    border-radius: 50%;
+    height: 30px;
+}
