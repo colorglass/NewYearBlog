@@ -1,3 +1,4 @@
 spring:
-  datasource:
-    url: 
+  profiles:
+    active:
+    - dev

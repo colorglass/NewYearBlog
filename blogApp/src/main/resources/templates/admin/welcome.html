@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>登录成功</title>
+
+    <link rel="stylesheet" href="../../static/lib/bootstrap4/css/bootstrap.min.css"
+        th:href="@{/lib/bootstrap4/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../../static/lib/bootstrap-icons/bootstrap-icons.css"
+        th:href="@{/lib/bootstrap-icons/bootstrap-icons.css}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand h4" href="#">后台管理</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item mr-2">
+                        <a class="nav-link " href="#" th:href="@{/admin/index}">博客</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#" th:href="@{/admin/tags}">标签和分类</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#" th:href="@{/admin/comments}">留言</a>
+                    </li>
+                    <li class="nav-item  mr-2">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">数据</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-reset" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        th:text="${session.user.nickname}">
+                        用户
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/admin/logout}">退出登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-lg d-flex flex-column align-items-center justify-content-center" style="height: 500px;">
+        <h3 class="mb-4" th:text=${session.user.nickname}>幻丶象</h3>
+        <h1 class="display-4 text-info mb-4">登录成功</h1>
+        <a href="#" th:href="@{/admin/index}" class="btn btn-outline-secondary">返回首页</a>
+    </main>
+
+
+
+    <script src="../../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
+    <script src="../../static/lib/bootstrap4/js/bootstrap.bundle.min.js"
+        th:src="@{/lib/bootstrap4/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
