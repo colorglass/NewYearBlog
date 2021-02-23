@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog
+    username: test
+    password: test
+
+logging:
+  file:
+    name: log/pro/blog.log
+  level:
+    root: info
+    '[com.newyearblog.blog]': debug
+
+server:
+  port: 8080
