@@ -13,11 +13,6 @@ public class AdminController {
         return "admin/index";
     }
 
-    @GetMapping("/tags")
-    public String tagsPage(){
-        return "admin/tags";
-    }
-
     @GetMapping("/comments")
     public String commentsPage(){
         return "admin/comments";

@@ -26,4 +26,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Blog> blogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Type> types = new ArrayList<>();
 }
