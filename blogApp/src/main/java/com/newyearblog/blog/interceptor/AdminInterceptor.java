@@ -19,7 +19,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         if (user != null) {
             return true;
         }
-        response.sendRedirect("/admin");
+        response.sendRedirect("/admin/login");
         return false;
     }
 }

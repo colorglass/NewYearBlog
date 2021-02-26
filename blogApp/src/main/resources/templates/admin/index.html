@@ -59,7 +59,7 @@
         <h3 class="text-center">博文数：<span class="text-info">12</span></h3>
 
         <div class="d-flex my-4">
-            <a class="btn btn-primary px-3 mr-3" data-toggle="collapse" href="#">
+            <a class="btn btn-primary px-3 mr-3" data-toggle="collapse" th:href="@{/admin/blog/new}" href="#">
                 新建
             </a>
             <button class="btn btn-secondary px-3" type="button" data-toggle="collapse" data-target="#search">
@@ -70,25 +70,31 @@
             <form class="form-inline w-100" action="">
                 <div class="col-md-4 col-6">
                     <h5 class="mb-3 text-muted">选择分类</h5>
-                    <select class="custom-select w-100" id="sort" aria-label="Example select with button addon">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="custom-select w-100" name="typeFilter" id="type"
+                        aria-label="Example select with button addon">
+                        <div>
+                            <option selected>任何分类</option>
+                        </div>
+                        <div th:each="type : ${types}">
+                            <option th:value="${type.id}" th:text="${type.typeName}" value="1">One</option>
+                        </div>
                     </select>
                 </div>
                 <div class="col-md-4 col-6">
                     <h5 class="mb-3 text-muted">选择标签</h5>
-                    <select class="custom-select w-100" id="tag" aria-label="Example select with button addon">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="custom-select w-100" name="tagFilter" id="tag"
+                        aria-label="Example select with button addon">
+                        <div>
+                            <option selected>任何标签</option>
+                        </div>
+                        <div th:each="tag : ${tags}">
+                            <option th:value="${tag.id}" th:text="${tag.tagName}" value="1">One</option>
+                        </div>
                     </select>
                 </div>
                 <div class="col-md-4 col-6 mt-md-0 mt-4">
                     <h5 class="mb-3 text-muted">输入标题</h5>
-                    <input class="form-control w-100" type="text" placeholder="任何标题" id="title">
+                    <input class="form-control w-100" type="text" name="titleFilter" placeholder="任何标题" id="title">
                 </div>
                 <div class="col-6 d-md-flex mt-4">
                     <button type="submit" class="btn btn-outline-secondary">搜索</button>
@@ -97,296 +103,26 @@
         </div>
 
         <ul class="list-group my-5">
-            <li class="list-group-item">
+            <li th:each="blog : ${page.content}" class="list-group-item">
                 <div class="row">
                     <div class="col-md-9 mb-3 mb-md-3">
-                        <h4 class="mb-4 mt-2">标题1</h4>
+                        <h4 class="mb-4 mt-2" th:text="${blog.title}">标题1</h4>
                         <div class="row">
                             <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small
+                                        th:text="${blog.user.nickName}">幻丶象</small></p>
                             </div>
                             <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-calendar2-date mr-1"></i><small
+                                        th:text="${blog.createTime}">2021-2-15</small></p>
                             </div>
                             <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small
+                                        th:text="${blog.type.typeName}">技术</small></p>
                             </div>
                             <div class="col-6">
                                 <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1">Java</small>
-                                    <small class="mr-1">C++</small>
-                                    <small class="mr-1">Python</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal"
-                            data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-3">
-                        <h4 class="mb-4 mt-2">标题1</h4>
-                        <div class="row">
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1">Java</small>
-                                    <small class="mr-1">C++</small>
-                                    <small class="mr-1">Python</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal"
-                            data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-3">
-                        <h4 class="mb-4 mt-2">标题1</h4>
-                        <div class="row">
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1">Java</small>
-                                    <small class="mr-1">C++</small>
-                                    <small class="mr-1">Python</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal"
-                            data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-3">
-                        <h4 class="mb-4 mt-2">标题1</h4>
-                        <div class="row">
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1">Java</small>
-                                    <small class="mr-1">C++</small>
-                                    <small class="mr-1">Python</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal"
-                            data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-3">
-                        <h4 class="mb-4 mt-2">标题1</h4>
-                        <div class="row">
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1">Java</small>
-                                    <small class="mr-1">C++</small>
-                                    <small class="mr-1">Python</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal"
-                            data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该博文？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-3">
-                        <h4 class="mb-4 mt-2">标题1</h4>
-                        <div class="row">
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small>技术</small></p>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1">Java</small>
-                                    <small class="mr-1">C++</small>
-                                    <small class="mr-1">Python</small>
+                                    <small th:each="tag : ${type.tags}" th:text="tag.tagName" class="mr-1">Java</small>
                                 </p>
                             </div>
                         </div>
@@ -425,20 +161,54 @@
 
         <div class="d-flex justify-content-center">
             <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
+                <ul class="pagination" th:unless="${page.totalPages} > 5">
+                    <li class="page-item " th:unless="${page.first}">
                         <a class="page-link" href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
-                    <li class="page-item disabled"><a class="page-link text-monospace" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1,page.totalPages)}">
+                        <a class="page-link text-reset" th:text="${pageNumber}" href="#">1</a>
+                    </li>
+                    <li class="page-item" th:unless="${page.last}">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="pagination" th:if="${page.totalPages} > 5">
+                    <li class="page-item " th:unless="${page.first}">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${page.number} > 1">
+                        <a class="page-link text-reset" href="#">1</a>
+                    </li>
+                    <li class="page-item disabled" th:if="${page.number} > 2">
+                        <a class="page-link text-monospace" href="#">...</a>
+                    </li>
+
                     <li class="page-item">
+                        <a class="page-link text-reset" href="#"
+                            th:text="${page.first}? 1:${page.last ? page.totalPages-2:page.number}">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link text-reset" href="#"
+                            th:text="${page.first}? 2:${page.last ? page.totalPages-1:page.number+1}">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link text-reset" href="#"
+                            th:text="${page.first}? : 3:${page.last? page.totalPages:page.number+2}">3</a>
+                    </li>
+
+                    <li class="page-item disabled" th:if="${page.totalPages-page.number-2}>3">
+                        <a class="page-link text-monospace" href="#">...</a>
+                    </li>
+                    <li class="page-item" th:if="${page.totalPages-page.number}>2">
+                        <a class="page-link text-reset" href="#" th:text="${page.totalPages}">3</a>
+                    </li>
+                    <li class="page-item" th:unless="${page.last}">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>

@@ -1,5 +1,7 @@
 package com.newyearblog.blog.service;
 
+import java.util.List;
+
 import com.newyearblog.blog.entity.Type;
 
 import org.springframework.data.domain.Page;
@@ -18,4 +20,6 @@ public interface TypeService {
     public Page<Type> listType(Pageable pageable);
 
     public Type getByTypeName(String typeName);
+
+    public List<Type> getAllTypes();
 }

@@ -1,5 +1,7 @@
 package com.newyearblog.blog.service;
 
+import java.util.List;
+
 import com.newyearblog.blog.entity.Type;
 import com.newyearblog.blog.repository.TypeRepository;
 
@@ -48,19 +50,22 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public Type getType(Long id) {
-
         return typeRepository.getOne(id);
     }
 
     @Override
     public Page<Type> listType(Pageable pageable) {
-
         return typeRepository.findAll(pageable);
     }
 
     @Override
     public Type getByTypeName(String typeName) {
         return typeRepository.findByTypeName(typeName);
+    }
+
+    @Override
+    public List<Type> getAllTypes() {
+        return typeRepository.findAll();
     }
 
 }
