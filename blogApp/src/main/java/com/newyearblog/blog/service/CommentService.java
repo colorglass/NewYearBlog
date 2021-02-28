@@ -3,7 +3,6 @@ package com.newyearblog.blog.service;
 import com.newyearblog.blog.entity.Comment;
 import org.springframework.data.domain.Page;
 
-import java.util.Date;
 import java.util.List;
 
 public interface CommentService {
