@@ -11,10 +11,25 @@
         th:href="@{/lib/bootstrap4/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../../static/lib/bootstrap-icons/bootstrap-icons.css"
         th:href="@{/lib/bootstrap-icons/bootstrap-icons.css}">
+    <script src="../../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
+    <script src="../../static/lib/bootstrap4/js/bootstrap.bundle.min.js"
+            th:src="@{/lib/bootstrap4/js/bootstrap.bundle.min.js}"></script>
+    <script>
+
+        $(function(){
+            $(".page-item").ready(
+                function () {
+                    date = "?year=" + $("select")[0].value + "&" + "month=" + $("select")[1].value;
+                    $(".page-item a").each(function () {
+                        this.href = this.href + date;
+                    });
+                }
+            )
+        });
+    </script>
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand h4" href="#">后台管理</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -56,25 +71,32 @@
     </nav>
 
     <main class="container-lg py-5 h-100 px-lg-5">
-        <h3 class="text-center">留言数：<span class="text-info">12</span></h3>
+        <h3 class="text-center">留言数：<span class="text-info" th:text="${commentCount}">12</span></h3>
 
-        <form class="form-inline w-100 py-4 mt-4 border rounded" action="">
+        <form class="form-inline w-100 py-4 mt-4 border rounded" th:action="@{/admin/comments}" method="post">
             <div class="col-md-4 col-6">
                 <h5 class="mb-3 text-muted">选择年份</h5>
-                <select class="custom-select w-100" id="sort" aria-label="Example select with button addon">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="custom-select w-100" id="sort" aria-label="Example select with button addon" name="year">
+                    <option value="0">Choose...</option>
+                    <option th:each="yearValue:${years}" th:value="${yearValue}" th:text="${yearValue}" th:selected="${yearValue == chooseYear}">One</option>
                 </select>
             </div>
             <div class="col-md-4 col-6">
                 <h5 class="mb-3 text-muted">选择月份</h5>
-                <select class="custom-select w-100" id="tag" aria-label="Example select with button addon">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="custom-select w-100" id="tag" aria-label="Example select with button addon" name="month">
+                    <option value="0" th:selected="${0 == chooseMonth}">Choose...</option>
+                    <option value="1" th:selected="${1 == chooseMonth}">一月</option>
+                    <option value="2" th:selected="${2 == chooseMonth}">二月</option>
+                    <option value="3" th:selected="${3 == chooseMonth}">三月</option>
+                    <option value="4" th:selected="${4 == chooseMonth}">四月</option>
+                    <option value="5" th:selected="${5 == chooseMonth}">五月</option>
+                    <option value="6" th:selected="${6 == chooseMonth}">六月</option>
+                    <option value="7" th:selected="${7 == chooseMonth}">七月</option>
+                    <option value="8" th:selected="${8 == chooseMonth}">八月</option>
+                    <option value="9" th:selected="${9 == chooseMonth}">九月</option>
+                    <option value="10" th:selected="${10 == chooseMonth}">十月</option>
+                    <option value="11" th:selected="${11 == chooseMonth}">十一月</option>
+                    <option value="12" th:selected="${12 == chooseMonth}">十二月</option>
                 </select>
             </div>
             <div class="col-6 col-md-4 d-md-flex justify-content-center mt-4">
@@ -83,17 +105,17 @@
         </form>
 
         <ul class="list-group my-5">
-            <li class="list-group-item">
+            <li class="list-group-item" th:each="comment:${comments}">
                 <div class="row">
                     <div class="col-md-9 mb-3 mb-md-0">
                         <div class="d-flex">
-                            <h5 class=" mt-0 mb-1">Jack</h5>
+                            <h5 class=" mt-0 mb-1" th:text="${comment.nickName}">Jack</h5>
                             <p class=" text-muted ml-auto"><i
-                                    class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
+                                    class="bi bi-hourglass-split mr-1"></i><small th:text="${comment.createTime}">2021-2-16 21:41</small></p>
                         </div>
-                        <p >balbala</p>
-                        <p class="small mb-0">该留言来自:<em>标题1</em></p>
-                        <p class="small"><i class="bi bi-envelope mr-1"></i>2772678282@qq.com</p>
+                        <p th:text="${comment.content}">balbala</p>
+                        <p class="small mb-0">该留言来自:<em th:text="${comment.blog.title}">标题1</em></p>
+                        <p class="small" th:text="${comment.email}"><i class="bi bi-envelope mr-1"></i>2772678282@qq.com</p>
                     </div>
                     <div class="col-md-3 d-flex align-items-center justify-content-end">
                         <!-- Button trigger modal -->
@@ -103,7 +125,7 @@
 
                         <!-- Modal -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
+                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -114,208 +136,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-0">
-                        <div class="d-flex">
-                            <h5 class=" mt-0 mb-1">Jack</h5>
-                            <p class=" text-muted ml-auto"><i
-                                    class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
-                        </div>
-                        <p >balbala</p>
-                        <p class="small mb-0">该留言来自:<em>标题1</em></p>
-                        <p class="small"><i class="bi bi-envelope mr-1"></i>2772678282@qq.com</p>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该留言？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-0">
-                        <div class="d-flex">
-                            <h5 class=" mt-0 mb-1">Jack</h5>
-                            <p class=" text-muted ml-auto"><i
-                                    class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
-                        </div>
-                        <p >balbala</p>
-                        <p class="small mb-0">该留言来自:<em>标题1</em></p>
-                        <p class="small"><i class="bi bi-envelope mr-1"></i>2772678282@qq.com</p>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该留言？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-0">
-                        <div class="d-flex">
-                            <h5 class=" mt-0 mb-1">Jack</h5>
-                            <p class=" text-muted ml-auto"><i
-                                    class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
-                        </div>
-                        <p >balbala</p>
-                        <p class="small mb-0">该留言来自:<em>标题1</em></p>
-                        <p class="small"><i class="bi bi-envelope mr-1"></i>2772678282@qq.com</p>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该留言？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-0">
-                        <div class="d-flex">
-                            <h5 class=" mt-0 mb-1">Jack</h5>
-                            <p class=" text-muted ml-auto"><i
-                                    class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
-                        </div>
-                        <p >balbala</p>
-                        <p class="small mb-0">该留言来自:<em>标题1</em></p>
-                        <p class="small"><i class="bi bi-envelope mr-1"></i>2772678282@qq.com</p>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该留言？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-9 mb-3 mb-md-0">
-                        <div class="d-flex">
-                            <h5 class=" mt-0 mb-1">Jack</h5>
-                            <p class=" text-muted ml-auto"><i
-                                    class="bi bi-hourglass-split mr-1"></i><small>2021-2-16 21:41</small></p>
-                        </div>
-                        <p >balbala</p>
-                        <p class="small mb-0">该留言来自:<em>标题1</em></p>
-                        <p class="small"><i class="bi bi-envelope mr-1"></i>2772678282@qq.com</p>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal" data-target="#deleteModal">
-                            删除
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">是否要删除该留言？</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary mr-auto"
-                                            data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
+                                                data-dismiss="modal">关闭</button>
+                                        <a href=""# th:href="@{/admin/comments/delete/{commentId}(commentId=${comment.id})}" class="btn btn-danger">删除</a>
                                     </div>
                                 </div>
                             </div>
@@ -328,32 +150,37 @@
         <div class="d-flex justify-content-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
+                    <li class="page-item" th:if="${currentPage-1 gt 0}">
+                        <a class="page-link" th:href="@{/admin/comments/page/{page}(page=${currentPage-1})}"  href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
-                    <li class="page-item disabled"><a class="page-link text-monospace" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
+
+                    <li class="page-item" th:if="${currentPage gt 3}"><a  th:href="@{/admin/comments/page/{page}(page=${1})}" th:text="${1}" class="page-link text-reset" href="#">1</a></li>
+
+                    <li class="page-item disabled" th:if="${currentPage gt 4}"><a class="page-link text-monospace" href="#">...</a></li>
+
+                    <li class="page-item" th:each="page:${pageCount}" th:if="${page gt currentPage - 3 and page lt currentPage}"><a  th:href="@{/admin/comments/page/{page}(page=${page})}" th:text="${page}" class="page-link text-reset" href="#">1</a></li>
+                    <li class="page-item active" ><a  th:href="@{/admin/comments/page/{page}(page=${currentPage})}" th:text="${currentPage}" class="page-link text-reset" href="#">1</a></li>
+                    <li class="page-item" th:each="page:${pageCount}" th:if="${page gt currentPage and page lt currentPage + 3}"><a  th:href="@{/admin/comments/page/{page}(page=${page})}" th:text="${page}" class="page-link text-reset" href="#">1</a></li>
+
+                    <li class="page-item disabled" th:if="${currentPage lt totalPage - 3}"><a class="page-link text-monospace" href="#">...</a></li>
+
+                    <li class="page-item" th:if="${currentPage lt totalPage-2}"><a  th:href="@{/admin/comments/page/{page}(page=${totalPage})}" th:text="${totalPage}" class="page-link text-reset" href="#">1</a></li>
+
+                    <li class="page-item" th:if="${currentPage+1 le totalPage}" >
+                        <a class="page-link" href="#" th:href="@{/admin/comments/page/{page}(page=${currentPage+1})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
+
                 </ul>
             </nav>
         </div>
     </main>
 
 
-    <script src="../../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
-    <script src="../../static/lib/bootstrap4/js/bootstrap.bundle.min.js"
-        th:src="@{/lib/bootstrap4/js/bootstrap.bundle.min.js}"></script>
+
 </body>
 
 </html>
