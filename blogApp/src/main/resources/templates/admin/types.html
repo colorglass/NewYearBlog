@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>管理-分类</title>
+
+    <link rel="stylesheet" href="../../static/lib/bootstrap4/css/bootstrap.min.css"
+        th:href="@{/lib/bootstrap4/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../../static/lib/bootstrap-icons/bootstrap-icons.css"
+        th:href="@{/lib/bootstrap-icons/bootstrap-icons.css}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand h4" href="#">后台管理</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item mr-2">
+                        <a class="nav-link " href="#" th:href="@{/admin/index}">博客</a>
+                    </li>
+                    <li class="nav-item mr-2 active">
+                        <a class="nav-link" href="#" th:href="@{/admin/types}">分类</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#" th:href="@{/admin/tags}">标签</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="nav-link" href="#" th:href="@{/admin/comments}">留言</a>
+                    </li>
+                    <li class="nav-item  mr-2">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">数据</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-reset" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        th:text="${session.user.nickname}">
+                        用户
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" th:href="@{/admin/logout}">退出登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-xl py-5 h-100">
+        <div class="d-flex flex-column py-4">
+            <div class="alert alert-success mb-5 text-center w-50 align-self-center"
+                th:unless="${#strings.isEmpty(message)}" role="alert">
+                <strong th:text="${message}">simple success alert—check it out!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <h4 class="text-center mb-3">分类管理</h4>
+            <div class="table-responsive">
+                <table class="table" style="min-width:500px ;">
+                    <thead>
+                        <tr>
+                            <th scope="col">分类名</th>
+                            <th scope="col">创建者</th>
+                            <th scope="col">创建时间</th>
+                            <th scope="col">关联博文数</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="type : ${page.content}">
+                            <th th:text="${type.typeName}">Java</th>
+                            <td th:text="${type.user.nickname}">幻丶象</td>
+                            <td th:text="${type.createTime}">2021-2-18</td>
+                            <td th:text="${#lists.size(type.blogs)}">12</td>
+                            <td>
+                                <div class="d-flex">
+                                    <a href="#" th:href="@{/admin/types/update(id=${type.id})}"
+                                        class="btn btn-outline-secondary mr-2">修改</a>
+                                    <form th:action="@{/admin/types/del}" action="#" method="POST" class="inline-form">
+                                        <input type="hidden" name="id" th:value="${type.id}">
+                                        <button type="submit" class="btn btn-outline-danger">删除</a>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <div class="d-flex">
+                                    <a href="#" th:unless="${page.first}"
+                                        th:href="@{/admin/types(page=${page.number}-1)}"
+                                        class="btn btn-outline-info mr-3">上一页</a>
+                                    <a href="#" th:unless="${page.last}"
+                                        th:href="@{/admin/types(page=${page.number}+1)}"
+                                        class="btn btn-outline-info mr-auto">下一页</a>
+                                    <a href="#" th:href="@{/admin/types/new}" class="btn btn-outline-primary">新建分类</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="../../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
+    <script src="../../static/lib/bootstrap4/js/bootstrap.bundle.min.js"
+        th:src="@{/lib/bootstrap4/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

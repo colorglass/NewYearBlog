@@ -16,6 +16,6 @@ public class LoginConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration registration = registry.addInterceptor(new AdminInterceptor());
         registration.addPathPatterns("/admin/**"); // 拦截的页面
-        registration.excludePathPatterns("/admin/login", "/admin"); // 不拦截的页面
+        registration.excludePathPatterns("/admin/login"); // 不拦截的页面
     }
 }
