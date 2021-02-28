@@ -56,10 +56,19 @@
     </nav>
 
     <main class="container-lg py-5 h-100 px-lg-5">
-        <h3 class="text-center">博文数：<span class="text-info">12</span></h3>
+        <div class="d-flex flex-column">
+            <div class="alert alert-success mb-5 text-center w-50 align-self-center"
+                th:unless="${#strings.isEmpty(message)}" role="alert">
+                <strong th:text="${message}">simple success alert—check it out!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <h3 class="text-center">博文数：<span class="text-info" th:text="${totalBlogs}">12</span></h3>
 
         <div class="d-flex my-4">
-            <a class="btn btn-primary px-3 mr-3" data-toggle="collapse" th:href="@{/admin/blog/new}" href="#">
+            <a class="btn btn-primary px-3 mr-3" th:href="@{/admin/blog/new}" href="#">
                 新建
             </a>
             <button class="btn btn-secondary px-3" type="button" data-toggle="collapse" data-target="#search">
@@ -67,34 +76,35 @@
             </button>
         </div>
         <div class="collapse my-2 border py-3" id="search">
-            <form class="form-inline w-100" action="">
+            <form class="form-inline w-100" action="#" method="GET" th:action="@{/admin/index}">
                 <div class="col-md-4 col-6">
                     <h5 class="mb-3 text-muted">选择分类</h5>
-                    <select class="custom-select w-100" name="typeFilter" id="type"
-                        aria-label="Example select with button addon">
+                    <select class="custom-select w-100" name="typeId" id="type"
+                        aria-label="Example select with button addon" >
                         <div>
-                            <option selected>任何分类</option>
+                            <option value="" th:selected="${typeFilter==null}">任何分类</option>
                         </div>
                         <div th:each="type : ${types}">
-                            <option th:value="${type.id}" th:text="${type.typeName}" value="1">One</option>
+                            <option th:value="${type.id}" th:text="${type.typeName}" th:selected="${typeFilter==type.id}">One</option>
                         </div>
                     </select>
                 </div>
                 <div class="col-md-4 col-6">
                     <h5 class="mb-3 text-muted">选择标签</h5>
-                    <select class="custom-select w-100" name="tagFilter" id="tag"
-                        aria-label="Example select with button addon">
+                    <select class="custom-select w-100" name="tagId" id="tag"
+                        aria-label="Example select with button addon" >
                         <div>
-                            <option selected>任何标签</option>
+                            <option value="" th:selected="${tagFilter==null}">任何标签</option>
                         </div>
                         <div th:each="tag : ${tags}">
-                            <option th:value="${tag.id}" th:text="${tag.tagName}" value="1">One</option>
+                            <option th:value="${tag.id}" th:text="${tag.tagName}" th:selected="${tagFilter==tag.id}">One</option>
                         </div>
                     </select>
                 </div>
                 <div class="col-md-4 col-6 mt-md-0 mt-4">
                     <h5 class="mb-3 text-muted">输入标题</h5>
-                    <input class="form-control w-100" type="text" name="titleFilter" placeholder="任何标题" id="title">
+                    <input class="form-control w-100" type="text" name="title" placeholder="任何标题"
+                        th:value="${titleFilter}" id="title">
                 </div>
                 <div class="col-6 d-md-flex mt-4">
                     <button type="submit" class="btn btn-outline-secondary">搜索</button>
@@ -102,19 +112,20 @@
             </form>
         </div>
 
-        <ul class="list-group my-5">
-            <li th:each="blog : ${page.content}" class="list-group-item">
+        <ul th:fragment="blogList" class="list-group my-5">
+            <li th:each="blog,iterStat : ${page.content}" class="list-group-item">
                 <div class="row">
                     <div class="col-md-9 mb-3 mb-md-3">
-                        <h4 class="mb-4 mt-2" th:text="${blog.title}">标题1</h4>
+                        <h4 class="mb-4 mt-2"><span class="small text-info"
+                                th:unless="${blog.isPublished}">【草稿】</span><span th:text="${blog.title}">标题1</span></h4>
                         <div class="row">
                             <div class="col-6 col-lg-3">
                                 <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small
-                                        th:text="${blog.user.nickName}">幻丶象</small></p>
+                                        th:text="${blog.user.nickname}">幻丶象</small></p>
                             </div>
                             <div class="col-6 col-lg-3">
                                 <p class="mb-0 text-muted"><i class="bi bi-calendar2-date mr-1"></i><small
-                                        th:text="${blog.createTime}">2021-2-15</small></p>
+                                        th:text="${blog.updateTime}">2021-2-15</small></p>
                             </div>
                             <div class="col-6 col-lg-3">
                                 <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small
@@ -122,22 +133,31 @@
                             </div>
                             <div class="col-6">
                                 <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small th:each="tag : ${type.tags}" th:text="tag.tagName" class="mr-1">Java</small>
+                                    <small th:each="tag : ${blog.tags}" th:text="${tag.tagName}"
+                                        class="mr-1">Java</small>
                                 </p>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-3 d-flex align-items-center justify-content-end">
-                        <a href="#" class="btn btn-secondary px-3 mr-3">修改</a>
+                        <a href="#" th:href="@{/admin/blog/update(id=${blog.id})}"
+                            class="btn btn-secondary px-3 mr-2">修改</a>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger px-3" data-toggle="modal"
-                            data-target="#deleteModal">
+                        <button type="button" class="btn btn-danger px-3 mr-2" data-toggle="modal"
+                            data-target="#deleteModal" th:attr="data-target=|#deleteModal${iterStat.count}|">
                             删除
                         </button>
 
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary px-3" data-toggle="modal" data-target="#publish"
+                            th:attr="data-target=|#publishModal${iterStat.count}|" th:unless="${blog.isPublished}">
+                            发布
+                        </button>
+
                         <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
+                        <div class="modal fade" id="deleteModal" th:id="|deleteModal${iterStat.count}|" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -149,7 +169,33 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary mr-auto"
                                             data-dismiss="modal">关闭</button>
-                                        <a href="#" class="btn btn-danger">删除</a>
+                                        <form th:action="@{/admin/blog/del}" method="POST" class="form-inline">
+                                            <input type="hidden" name="id" th:value="${blog.id}">
+                                            <button type="submit" class="btn btn-danger">删除</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="publish" th:id="|publishModal${iterStat.count}|" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">是否要发布该博文？</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mr-auto"
+                                            data-dismiss="modal">关闭</button>
+                                        <form th:action="@{/admin/blog/publish}" method="POST" class="form-inline">
+                                            <input type="hidden" name="id" th:value="${blog.id}">
+                                            <button type="submit" class="btn btn-primary">发布</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -160,56 +206,46 @@
         </ul>
 
         <div class="d-flex justify-content-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" th:unless="${page.totalPages} > 5">
+            <nav aria-label="Page navigation example" th:if="${page.totalPages} > 0">
+                <ul class="pagination">
                     <li class="page-item " th:unless="${page.first}">
-                        <a class="page-link" href="#" aria-label="Previous">
+                        <a class="page-link" href="#" th:href="@{/admin/index(page=${page.number}-1)}"
+                            aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1,page.totalPages)}">
-                        <a class="page-link text-reset" th:text="${pageNumber}" href="#">1</a>
+                    <li class="page-item" th:if="${page.number} > 2">
+                        <a class="page-link " th:href="@{/admin/index(page=0)}" href="#">1</a>
                     </li>
-                    <li class="page-item" th:unless="${page.last}">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="pagination" th:if="${page.totalPages} > 5">
-                    <li class="page-item " th:unless="${page.first}">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item" th:if="${page.number} > 1">
-                        <a class="page-link text-reset" href="#">1</a>
-                    </li>
-                    <li class="page-item disabled" th:if="${page.number} > 2">
+                    <li class="page-item disabled" th:if="${page.number} > 3">
                         <a class="page-link text-monospace" href="#">...</a>
                     </li>
 
-                    <li class="page-item">
-                        <a class="page-link text-reset" href="#"
-                            th:text="${page.first}? 1:${page.last ? page.totalPages-2:page.number}">1</a>
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number-2,page.number-1)}"
+                        th:if="${pageNumber} >= 0">
+                        <a class="page-link " href="#" th:text="${pageNumber}+1"
+                            th:href="@{/admin/index(page=${pageNumber})}">1</a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link text-reset" href="#"
-                            th:text="${page.first}? 2:${page.last ? page.totalPages-1:page.number+1}">2</a>
+                    <li class="page-item active">
+                        <a class="page-link " href="#" th:text="${page.number}+1"
+                            th:href="@{/admin/index(page=${page.number}+1)}">2</a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link text-reset" href="#"
-                            th:text="${page.first}? : 3:${page.last? page.totalPages:page.number+2}">3</a>
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number+1,page.number+2)}"
+                        th:if="${pageNumber lt page.totalPages}">
+                        <a class="page-link " href="#" th:text="${pageNumber}+1"
+                            th:href="@{/admin/index(page=${pageNumber})}">3</a>
                     </li>
 
-                    <li class="page-item disabled" th:if="${page.totalPages-page.number-2}>3">
+                    <li class="page-item disabled" th:if="${page.totalPages-page.number}>4">
                         <a class="page-link text-monospace" href="#">...</a>
                     </li>
-                    <li class="page-item" th:if="${page.totalPages-page.number}>2">
-                        <a class="page-link text-reset" href="#" th:text="${page.totalPages}">3</a>
+                    <li class="page-item" th:if="${page.totalPages-page.number}>3">
+                        <a class="page-link " href="#" th:href="@{/admin/index(page=${page.totalPages-1})}"
+                            th:text="${page.totalPages}">3</a>
                     </li>
                     <li class="page-item" th:unless="${page.last}">
-                        <a class="page-link" href="#" aria-label="Next">
+                        <a class="page-link" href="#" th:href="@{/admin/index(page=${page.number}+1)}"
+                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -222,6 +258,23 @@
     <script src="../../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
     <script src="../../static/lib/bootstrap4/js/bootstrap.bundle.min.js"
         th:src="@{/lib/bootstrap4/js/bootstrap.bundle.min.js}"></script>
+
+    <script>
+        $(function () {
+            $('.page-item').ready(
+                function () {
+                    filter = "&typeId=" + $('#type').val() + "&tagId=" + $('#tag').val() + "&title=" + $('#title').val();
+                    $('.page-item a').each(
+                        function () {
+                            this.href = this.href + filter;
+                        }
+                    )
+                }
+            )
+        });
+    </script>
+
+
 </body>
 
 </html>

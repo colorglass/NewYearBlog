@@ -1,5 +1,6 @@
 package com.newyearblog.blog.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.newyearblog.blog.entity.Tag;
@@ -58,6 +59,7 @@ public class TagServiceImpl implements TagService {
     public Page<Tag> listTag(Pageable pageable) {
 
         return tagRepository.findAll(pageable);
+
     }
 
     @Override
@@ -69,4 +71,22 @@ public class TagServiceImpl implements TagService {
     public List<Tag> getAllTags() {
         return tagRepository.findAll();
     }
+
+    @Override
+    public List<Tag> getByIds(String ids) {
+        return tagRepository.findAllById(stringToList(ids));
+    }
+
+    private List<Long> stringToList(String str) {
+        List<Long> list = new ArrayList<>();
+        if (!("".equals(str)) && str != null) {
+            String[] strArray = str.split(",");
+            for (int i = 0; i < strArray.length; i++) {
+                list.add(Long.valueOf(strArray[i]));
+            }
+        }
+        
+        return list;
+    }
+
 }
