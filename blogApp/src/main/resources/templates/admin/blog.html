@@ -58,43 +58,31 @@
     </nav>
 
     <main class="container px-md-5 py-5">
-        <form action="">
+        <form id="blog-form" class="needs-validation" action="#" th:action="@{/admin/blog/save}" method="POST" novalidate>
+
             <div class="form-group">
                 <div class="input-group input-group-lg mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">标题</span>
                     </div>
-                    <input type="text" id="title" class="form-control" placeholder="请输入标题..." required>
+                    <input type="text" id="title" name="title" class="form-control" th:value="${blog.title}" placeholder="请输入标题..." required>
+                    <div class="invalid-feedback">
+                        标题为空
+                    </div>
                 </div>
             </div>
 
             <div id="test-editormd">
-                <textarea style="display:none;">
-            [TOC]
-    
-    #### Disabled options
-    
-    - TeX (Based on KaTeX);
-    - Emoji;
-    - Task lists;
-    - HTML tags decode;
-    - Flowchart and Sequence Diagram;
-    
-    #### Editor.md directory
-    
-                </textarea>
+                <textarea name="content" th:text="${blog.content}" placeholder="开始你的文档..." style="display:none;"></textarea>
             </div>
 
             <div class="row mb-3">
                 <div class="col-6">
                     <h5 class="text-muted">选择分类</h5>
                     <div class="form-group">
-                        <select class="form-control w-100" id="sort" aria-label="Example select with button addon"
+                        <select class="form-control w-100" id="sort" name="typeId" aria-label="Example select with button addon"
                             required>
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option th:each="type : ${types}" th:text="${type.typeName}" th:value="${type.id}">Choose...</option>
                         </select>
                         <div class="invalid-feedback">
                             请选择分类
@@ -103,27 +91,24 @@
                 </div>
             </div>
 
+
             <h5 class="text-muted">选择标签</h5>
-            <div class="d-flex border rounded p-3">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                    <label class="form-check-label" for="inlineCheckbox1">标签1</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                    <label class="form-check-label" for="inlineCheckbox2">标签2</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                    <label class="form-check-label" for="inlineCheckbox3">标签3</label>
+            <div class="row border rounded p-3">
+                <div class="col-2" th:each="tag : ${tags}">
+                    <div class="form-check form-check-inline" >
+                        <input class="form-check-input" name="tagIds" type="checkbox" th:id="${tag.tagName}" th:value="${tag.id}">
+                        <label class="form-check-label" th:for="${tag.tagName}" th:text="${tag.tagName}">标签1</label>
+                    </div>
                 </div>
             </div>
 
             <div class="d-flex mt-4 ">
-                <a href="#" class="btn btn-outline-danger mx-2 mr-auto">退出</a>
-                <button type="submit" class="btn btn-outline-info mx-2 ">保存</button>
-                <button type="submit" class="btn btn-outline-success mx-2">发布</button>
+                <button type="button" class="btn btn-outline-danger mx-2 mr-auto" onclick="javascripe:history.back(-1);">返回</a>
+                <button type="submit" id="save" class="btn btn-outline-info mx-2 ">保存</button>
+                <button type="submit" id="publish" class="btn btn-outline-success mx-2">发布</button>
             </div>
+            <input type="hidden" name="isPublished">
+            <input type="hidden" name="id" th:value="${blog.id}">
         </form>
     </main>
 
@@ -131,17 +116,45 @@
     <script src="../../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
     <script src="../../static/lib/bootstrap4/js/bootstrap.bundle.min.js"
         th:src="@{/lib/bootstrap4/js/bootstrap.bundle.min.js}"></script>
-    <script src="../../static/lib/editormd/editormd.min.js" th:src="/lib/editormd/editormd.min.js"></script>
+    <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
     <script>
         var testEditor;
+
+        $('#save').click(function() {
+            $('[name="isPublished"]').val(false);
+            $('#blog-form').submit();
+        })
+        $('#publish').click(function() {
+            $('[name="isPublished"]').val(true);
+            $('#blog-form').submit();
+        })
 
         $(function () {
             testEditor = editormd("test-editormd", {
                 height: 640,
                 syncScrolling: "single",
-                path: "../../static/lib/editormd/lib/"
+                path: "/lib/editormd/lib/"
             });
         });
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
     </script>
 </body>
 

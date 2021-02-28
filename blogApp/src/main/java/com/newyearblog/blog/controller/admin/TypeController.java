@@ -29,7 +29,7 @@ public class TypeController {
 
     @GetMapping("/types")
     public String TypesPage(
-            @PageableDefault(size = 8, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 6, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
             Model model) {
         model.addAttribute("page", typeService.listType(pageable));
         return "admin/types";
@@ -52,7 +52,7 @@ public class TypeController {
         if (type.getTypeName().isEmpty()) {
             attributes.addFlashAttribute("message", "请输入类型名");
             attributes.addFlashAttribute("type", type);
-            return "redirect:/admin/types/input-error";
+            return "redirect:/admin/types/new";
         }
 
         // 判断类型名是否重复

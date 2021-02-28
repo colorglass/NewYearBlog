@@ -29,7 +29,7 @@ public class TagController {
 
     @GetMapping("/tags")
     public String TagsPage(
-            @PageableDefault(size = 3, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 6, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
             Model model) {
         model.addAttribute("page", tagService.listTag(pageable));
         return "admin/tags";
@@ -52,7 +52,7 @@ public class TagController {
         if (tag.getTagName().isEmpty()) {
             attributes.addFlashAttribute("message", "请输入标签名");
             attributes.addFlashAttribute("tag", tag);
-            return "redirect:/admin/tags/input-error";
+            return "redirect:/admin/tags/new";
         }
 
         // 判断标签名是否重复

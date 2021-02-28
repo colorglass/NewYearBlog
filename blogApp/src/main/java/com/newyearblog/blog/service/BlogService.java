@@ -1,5 +1,7 @@
 package com.newyearblog.blog.service;
 
+import java.util.List;
+
 import com.newyearblog.blog.entity.Blog;
 
 import org.springframework.data.domain.Page;
@@ -10,9 +12,13 @@ public interface BlogService {
 
     Blog deleteBlog(Long id);
 
-    Blog updateBlog(Long id,Blog blog);
+    Blog updateBlog(Long id, Blog blog);
 
     Blog getBlog(Long id);
 
     Page<Blog> listBlog(Pageable pageable);
+
+    Page<Blog> filteListBlog(String title, Long typeId, Long tagId, Pageable pageable);
+
+    List<Blog> findAll();
 }

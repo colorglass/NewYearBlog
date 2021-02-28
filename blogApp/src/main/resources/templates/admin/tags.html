@@ -56,6 +56,7 @@
     </nav>
 
     <main class="container-xl py-5 h-100">
+
         <div class="d-flex flex-column py-4">
             <div class="alert alert-success mb-5 text-center w-50 align-self-center"
                 th:unless="${#strings.isEmpty(message)}" role="alert">
@@ -63,6 +64,9 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+            <div class="d-flex">
+                <a th:href="@{/admin/tags/new}" href="#" class="btn btn-outline-primary ml-auto">新建</a>
             </div>
             <h4 class="text-center mb-3">标签管理</h4>
             <div class="table-responsive">
@@ -93,88 +97,57 @@
                                 </div>
                             </td>
                         </tr>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">
-                                <div class="d-flex">
-                                    <a href="#" th:unless="${page.first}"
-                                        th:href="@{/admin/tags(page=${page.number}-1)}"
-                                        class="btn btn-outline-info mr-3">上一页</a>
-                                    <a href="#" th:unless="${page.last}" th:href="@{/admin/tags(page=${page.number}+1)}"
-                                        class="btn btn-outline-info mr-auto">下一页</a>
-                                    <a href="#" th:href="@{/admin/tags/new}" class="btn btn-outline-primary">新建标签</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example" th:if="${page.totalPages} > 0">
+
+                <ul class="pagination">
+                    <li class="page-item " th:unless="${page.first}">
+                        <a class="page-link" href="#" th:href="@{/admin/tags(page=${page.number}-1)}"
+                            aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${page.number} > 2">
+                        <a class="page-link " th:href="@{/admin/tags(page=0)}" href="#">1</a>
+                    </li>
+                    <li class="page-item disabled" th:if="${page.number} > 3">
+                        <a class="page-link text-monospace" href="#">...</a>
+                    </li>
+
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number-2,page.number-1)}"
+                        th:if="${pageNumber} >= 0">
+                        <a class="page-link " href="#" th:text="${pageNumber}+1"
+                            th:href="@{/admin/tags(page=${pageNumber})}">1</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link " href="#" th:text="${page.number}+1"
+                            th:href="@{/admin/tags(page=${page.number}+1)}">2</a>
+                    </li>
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number+1,page.number+2)}"
+                        th:if="${pageNumber lt page.totalPages}">
+                        <a class="page-link " href="#" th:text="${pageNumber}+1"
+                            th:href="@{/admin/tags(page=${pageNumber})}">3</a>
+                    </li>
+
+                    <li class="page-item disabled" th:if="${page.totalPages-page.number}>4">
+                        <a class="page-link text-monospace" href="#">...</a>
+                    </li>
+                    <li class="page-item" th:if="${page.totalPages-page.number}>3">
+                        <a class="page-link " href="#" th:href="@{/admin/tags(page=${page.totalPages-1})}"
+                            th:text="${page.totalPages}">3</a>
+                    </li>
+                    <li class="page-item" th:unless="${page.last}">
+                        <a class="page-link" href="#" th:href="@{/admin/tags(page=${page.number}+1)}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </main>
-    <div class="d-flex justify-content-center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination" th:unless="${page.totalPages} > 3">
-                <li class="page-item " th:unless="${page.first}">
-                    <a class="page-link" href="#" th:href="@{/admin/tags(page=${page.number}-1)}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1,page.totalPages)}"
-                    th:classappend="${page.number == pageNumber-1}? 'active':_">
-                    <a class="page-link" th:text="${pageNumber}" th:href="@{/admin/tags(page=${pageNumber-1})}"
-                        href="#">1</a>
-                </li>
-                <li class="page-item" th:unless="${page.last}">
-                    <a class="page-link" href="#" th:href="@{/admin/tags(page=${page.number}+1)}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="pagination" th:if="${page.totalPages} > 3">
-                <li class="page-item " th:unless="${page.first}">
-                    <a class="page-link" href="#" th:href="@{/admin/tags(page=${page.number}-1)}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:if="${page.number} > 1">
-                    <a class="page-link " th:href="@{/admin/tags(page=0)}" href="#">1</a>
-                </li>
-                <li class="page-item disabled" th:if="${page.number} > 2">
-                    <a class="page-link text-monospace" href="#">...</a>
-                </li>
-
-                <li class="page-item" th:classappend="${page.first}? 'active':_">
-                    <a class="page-link " href="#"
-                        th:text="${page.first}? 1:(${page.last} ? ${page.totalPages}-2:${page.number})"
-                        th:href="@{/admin/tags(page=${page.first}? 0:(${page.last} ? ${page.totalPages}-3:${page.number}-1))}">1</a>
-                </li>
-                <li class="page-item" th:classappend="${page.first}? _:(${page.last}? _:active)">
-                    <a class="page-link " href="#"
-                        th:text="${page.first}? 2:(${page.last} ? ${page.totalPages-1}:${page.number+1})"
-                        th:href="@{/admin/tags(page=${page.first}? 1:(${page.last} ? ${page.totalPages-2}:${page.number}))}">2</a>
-                </li>
-                <li class="page-item" th:classappend="${page.last}? 'active':_">
-                    <a class="page-link " href="#"
-                        th:text="${page.first}? 3:(${page.last}? ${page.totalPages}:${page.number+2})"
-                        th:href="@{/admin/tags(page=${page.first}? 2:(${page.last}? ${page.totalPages}-1:${page.number+1}))}">3</a>
-                </li>
-
-                <li class="page-item disabled" th:if="${page.totalPages-page.number}>3">
-                    <a class="page-link text-monospace" href="#">...</a>
-                </li>
-                <li class="page-item" th:if="${page.totalPages-page.number}>2">
-                    <a class="page-link " href="#" th:href="@{/admin/tags(page=${page.totalPages-1})}"
-                        th:text="${page.totalPages}">3</a>
-                </li>
-                <li class="page-item" th:unless="${page.last}">
-                    <a class="page-link" href="#" th:href="@{/admin/tags(page=${page.number}+1)}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
 
 
     <script src="../../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
