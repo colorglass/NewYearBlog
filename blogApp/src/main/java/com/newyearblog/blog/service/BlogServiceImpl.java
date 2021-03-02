@@ -61,13 +61,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Page<Blog> filteListBlog(String title, Long typeId, Long tagId, Pageable pageable) {
-        return blogRepository.findAll(Blog.filter(title, typeId, tagId), pageable);
+    public Page<Blog> filteListBlog(String title, Long typeId, Long tagId, Boolean publishedFilter, Pageable pageable) {
+        return blogRepository.findAll(Blog.filter(title, typeId, tagId, publishedFilter), pageable);
     }
 
     @Override
     public List<Blog> findAll() {
-        
+
         return blogRepository.findAll();
     }
 

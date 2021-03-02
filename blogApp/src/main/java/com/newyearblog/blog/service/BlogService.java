@@ -18,7 +18,7 @@ public interface BlogService {
 
     Page<Blog> listBlog(Pageable pageable);
 
-    Page<Blog> filteListBlog(String title, Long typeId, Long tagId, Pageable pageable);
+    Page<Blog> filteListBlog(String title, Long typeId, Long tagId, Boolean publishedFilter, Pageable pageable);
 
     List<Blog> findAll();
 }

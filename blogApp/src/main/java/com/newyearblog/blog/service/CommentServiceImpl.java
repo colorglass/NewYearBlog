@@ -13,14 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
-
-
-
 
     @Override
     public Page<Comment> queryCommentsPage(int page) {
@@ -33,12 +29,14 @@ public class CommentServiceImpl implements CommentService{
     public Page<Comment> queryCommentsByDate(int year, int month, int page) {
         Page<Comment> comments = commentRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if(year != 0){
-                Predicate predicate = criteriaBuilder.equal(criteriaBuilder.function("year", Integer.class, root.get("createTime")), year);
+            if (year != 0) {
+                Predicate predicate = criteriaBuilder
+                        .equal(criteriaBuilder.function("year", Integer.class, root.get("createTime")), year);
                 predicates.add(predicate);
             }
-            if(month != 0){
-                Predicate predicate = criteriaBuilder.equal(criteriaBuilder.function("month",  Integer.class, root.get("createTime")), month);
+            if (month != 0) {
+                Predicate predicate = criteriaBuilder
+                        .equal(criteriaBuilder.function("month", Integer.class, root.get("createTime")), month);
                 predicates.add(predicate);
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
@@ -52,22 +50,15 @@ public class CommentServiceImpl implements CommentService{
         return commentRepository.findAllYear();
     }
 
-
     @Override
-    public int addComment(Comment comment) {
-        return 0;
+    public Comment addComment(Comment comment) {
+        return commentRepository.save(comment);
     }
-
-
-
 
     @Override
     public int deleteComment(Long id) {
         return commentRepository.deleteCommentById(id);
     }
-
-
-
 
     @Override
     public int getCommentCount() {
