@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" >
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
@@ -7,12 +7,14 @@
 
     <title>首页</title>
 
-    <link rel="stylesheet" href="../static/lib/bootstrap4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/lib/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../static/lib/bootstrap4/css/bootstrap.min.css"
+        th:href="@{/lib/bootstrap4/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../static/lib/bootstrap-icons/bootstrap-icons.css"
+        th:href="@{/lib/bootstrap-icons/bootstrap-icons.css}">
 
 </head>
 
-<body >
+<body>
 
     <!-- header -->
     <div class="container-fluid bg-light">
@@ -30,7 +32,7 @@
         <div class="collapse navbar-collapse justify-content-around" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item active mr-2">
-                    <a class="nav-link" href="#">首页</a>
+                    <a class="nav-link" href="#" th:href="@{/index}">首页</a>
                 </li>
                 <li class="nav-item mr-2">
                     <a class="nav-link" href="#">分类</a>
@@ -45,177 +47,42 @@
             <form class="form-inline my-2 my-lg-0">
                 <input type="search" class="form-control" placeholder="search...">
                 <div class="input-group-append">
-                    <button class="btn" type="button" id="button-addon2"><i
-                            class="bi bi-search"></i></button>
+                    <button class="btn" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
                 </div>
             </form>
         </div>
     </nav>
-    
+
 
 
     <!-- content -->
     <div class="container-lg d-flex flex-column align-items-center p-5">
         <div class="row row-cols-1 w-75">
-            <div class="col mb-5">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title m-0 text-center">Card title</h5>
+            <div class="col mb-5" th:each="blog : ${page.content}">
+                <div class="card shadow-sm ">
+                    <div class="card-header bg-white d-flex justify-content-center">
+                        <a class="card-title h5 m-0 text-center text-reset" href="#" th:href="@{/blog(id=${blog.id})}" th:text="${blog.title}">Card title</a>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
+                        <p class="card-text" th:text="${blog.description}">无描述...</p>
                     </div>
                     <div class="card-footer bg-white">
                         <div class="row">
                             <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small th:text="${blog.user.nickname}">幻丶象</small></p>
                             </div>
                             <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small><a href=""
-                                            class="text-reset">技术</a></small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1"><a href="" class="text-reset">Java</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">C++</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">Python</a></small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title m-0 text-center">Card title</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                    </div>
-                    <div class="card-footer bg-white">
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
+                                <p class="mb-0 text-muted"><i class="bi bi-calendar2-date mr-1"></i><small
+                                        th:text="${blog.updateTime}">2021-2-15</small></p>
                             </div>
                             <div class="col-lg-3 col-6">
                                 <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small><a href=""
-                                            class="text-reset">技术</a></small></p>
+                                            class="text-reset" th:text="${blog.type.typeName}">技术</a></small></p>
                             </div>
                             <div class="col-lg-3 col-6">
                                 <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1"><a href="" class="text-reset">Java</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">C++</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">Python</a></small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title m-0 text-center">Card title</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                    </div>
-                    <div class="card-footer bg-white">
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small><a href=""
-                                            class="text-reset">技术</a></small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1"><a href="" class="text-reset">Java</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">C++</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">Python</a></small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title m-0 text-center">Card title</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                    </div>
-                    <div class="card-footer bg-white">
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small><a href=""
-                                            class="text-reset">技术</a></small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1"><a href="" class="text-reset">Java</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">C++</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">Python</a></small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title m-0 text-center">Card title</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                    </div>
-                    <div class="card-footer bg-white">
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-person mr-1"></i><small>幻丶象</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i
-                                        class="bi bi-calendar2-date mr-1"></i><small>2021-2-15</small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-funnel mr-1"></i><small><a href=""
-                                            class="text-reset">技术</a></small></p>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <p class="mb-0 text-muted"><i class="bi bi-tags mr-1"></i>
-                                    <small class="mr-1"><a href="" class="text-reset">Java</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">C++</a></small>
-                                    <small class="mr-1"><a href="" class="text-reset">Python</a></small>
+                                    <small class="mr-1" th:each="tag : ${blog.tags}"><a href="" class="text-reset"
+                                            th:text="${tag.tagName}">Java</a></small>
                                 </p>
                             </div>
                         </div>
@@ -225,22 +92,46 @@
         </div>
 
         <!-- pagination -->
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example" th:if="${page.totalPages} > 0">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                <li class="page-item " th:unless="${page.first}">
+                    <a class="page-link" href="#" th:href="@{/index(page=${page.number}-1)}"
+                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
-                <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
-                <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
-                <li class="page-item disabled"><a class="page-link text-monospace" href="#">...</a></li>
-                <li class="page-item"><a class="page-link text-reset" href="#">1</a></li>
-                <li class="page-item"><a class="page-link text-reset" href="#">2</a></li>
-                <li class="page-item"><a class="page-link text-reset" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                <li class="page-item" th:if="${page.number} > 2">
+                    <a class="page-link " th:href="@{/index(page=0)}" href="#">1</a>
+                </li>
+                <li class="page-item disabled" th:if="${page.number} > 3">
+                    <a class="page-link text-monospace" href="#">...</a>
+                </li>
+
+                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number-2,page.number-1)}"
+                    th:if="${pageNumber} >= 0">
+                    <a class="page-link " href="#" th:text="${pageNumber}+1"
+                        th:href="@{/index(page=${pageNumber})}">1</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link " href="#" th:text="${page.number}+1"
+                        th:href="@{/index(page=${page.number})}">2</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number+1,page.number+2)}"
+                    th:if="${pageNumber lt page.totalPages}">
+                    <a class="page-link " href="#" th:text="${pageNumber}+1"
+                        th:href="@{/index(page=${pageNumber})}">3</a>
+                </li>
+
+                <li class="page-item disabled" th:if="${page.totalPages-page.number}>4">
+                    <a class="page-link text-monospace" href="#">...</a>
+                </li>
+                <li class="page-item" th:if="${page.totalPages-page.number}>3">
+                    <a class="page-link " href="#" th:href="@{/index(page=${page.totalPages-1})}"
+                        th:text="${page.totalPages}">3</a>
+                </li>
+                <li class="page-item" th:unless="${page.last}">
+                    <a class="page-link" href="#" th:href="@{/index(page=${page.number}+1)}"
+                        aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -249,14 +140,16 @@
     </div>
 
     <!-- footer -->
-    <div class="container-fluid d-flex flex-column border-top bg-light align-items-center justify-content-center" style="height: 150px;">
-        <h4 class="font-weight-light">我的博客</h4>        
+    <div class="container-fluid d-flex flex-column border-top bg-light align-items-center justify-content-center"
+        style="height: 150px;">
+        <h4 class="font-weight-light">我的博客</h4>
     </div>
 
 
 
-    <script src="../static/lib/jquery-3.5.1.js"></script>
-    <script src="../static/lib/bootstrap4/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/jquery-3.5.1.js" th:src="@{/lib/jquery-3.5.1.js}"></script>
+    <script src="../static/lib/bootstrap4/js/bootstrap.bundle.min.js"
+        th:src="@{/lib/bootstrap4/js/bootstrap.bundle.min.js}"></script>
 </body>
 
 </html>

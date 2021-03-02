@@ -35,11 +35,11 @@ public class BlogController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/index")
+    @GetMapping(value = { "/index", "/" })
     public String indexPage(
             @PageableDefault(size = 6, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable, Model model,
             String title, Long typeId, Long tagId) {
-        model.addAttribute("page", blogService.filteListBlog(title, typeId, tagId, pageable));
+        model.addAttribute("page", blogService.filteListBlog(title, typeId, tagId, false, pageable));
         model.addAttribute("types", typeService.getAllTypes());
         model.addAttribute("tags", tagService.getAllTags());
         model.addAttribute("typeFilter", typeId);

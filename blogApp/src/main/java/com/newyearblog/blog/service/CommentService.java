@@ -9,7 +9,7 @@ public interface CommentService {
 
 
 
-    int addComment(Comment comment);
+    Comment addComment(Comment comment);
 
     Page<Comment> queryCommentsPage(int page);
 

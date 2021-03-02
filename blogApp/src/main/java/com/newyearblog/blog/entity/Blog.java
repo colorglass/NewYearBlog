@@ -32,6 +32,7 @@ public class Blog {
     private Long id;
 
     private String title;
+    private String description;
 
     @Basic(fetch = FetchType.LAZY)
     @Lob
@@ -59,21 +60,25 @@ public class Blog {
                 + "'" + ", user='" + getUser() + "'" + ", comments='" + getComments() + "'" + "}";
     }
 
-    public static Specification<Blog> filter(String title, Long typeId, Long tagId) {
+    public static Specification<Blog> filter(String title, Long typeId, Long tagId, Boolean isPublished) {
         return new Specification<Blog>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
                 List<Predicate> predicates = new ArrayList<>();
-                if(!"".equals(title) && title != null){
-                    predicates.add(builder.like(root.get("title"),"%"+ title+"%"));
+                if (!"".equals(title) && title != null) {
+                    predicates.add(builder.like(root.get("title"), "%" + title + "%"));
                 }
-                if(typeId != null){
+                if (typeId != null) {
                     predicates.add(builder.equal(root.get("type").get("id"), typeId));
                 }
-                if(tagId != null){
-                    Join<Blog,Tag> join = root.join("tags");
+                if (tagId != null) {
+                    Join<Blog, Tag> join = root.join("tags");
                     predicates.add(builder.equal(join.get("id"), tagId));
+                }
+                if (isPublished) {
+                    predicates.add(builder.equal(root.get("isPublished"), isPublished));
                 }
                 query.where(predicates.toArray(new Predicate[predicates.size()]));
                 return null;

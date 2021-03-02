@@ -58,31 +58,40 @@
     </nav>
 
     <main class="container px-md-5 py-5">
-        <form id="blog-form" class="needs-validation" action="#" th:action="@{/admin/blog/save}" method="POST" novalidate>
+        <form id="blog-form" class="needs-validation" action="#" th:action="@{/admin/blog/save}" method="POST"
+            novalidate>
 
             <div class="form-group">
                 <div class="input-group input-group-lg mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">标题</span>
                     </div>
-                    <input type="text" id="title" name="title" class="form-control" th:value="${blog.title}" placeholder="请输入标题..." required>
+                    <input type="text" id="title" name="title" class="form-control" th:value="${blog.title}"
+                        placeholder="请输入标题..." required>
                     <div class="invalid-feedback">
                         标题为空
                     </div>
                 </div>
             </div>
 
+            <div class="form-group">
+                <h5 class="text-muted">添加描述</h5>
+                <textarea class="form-control" rows="3" name="description" value="无描述。。。" placeholder="输入博文描述..."></textarea>
+            </div>
+
             <div id="test-editormd">
-                <textarea name="content" th:text="${blog.content}" placeholder="开始你的文档..." style="display:none;"></textarea>
+                <textarea name="content" th:text="${blog.content}" placeholder="开始你的文档..."
+                    style="display:none;"></textarea>
             </div>
 
             <div class="row mb-3">
                 <div class="col-6">
                     <h5 class="text-muted">选择分类</h5>
                     <div class="form-group">
-                        <select class="form-control w-100" id="sort" name="typeId" aria-label="Example select with button addon"
-                            required>
-                            <option th:each="type : ${types}" th:text="${type.typeName}" th:value="${type.id}">Choose...</option>
+                        <select class="form-control w-100" id="sort" name="typeId"
+                            aria-label="Example select with button addon" required>
+                            <option th:each="type : ${types}" th:text="${type.typeName}" th:value="${type.id}">Choose...
+                            </option>
                         </select>
                         <div class="invalid-feedback">
                             请选择分类
@@ -95,17 +104,19 @@
             <h5 class="text-muted">选择标签</h5>
             <div class="row border rounded p-3">
                 <div class="col-2" th:each="tag : ${tags}">
-                    <div class="form-check form-check-inline" >
-                        <input class="form-check-input" name="tagIds" type="checkbox" th:id="${tag.tagName}" th:value="${tag.id}">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" name="tagIds" type="checkbox" th:id="${tag.tagName}"
+                            th:value="${tag.id}">
                         <label class="form-check-label" th:for="${tag.tagName}" th:text="${tag.tagName}">标签1</label>
                     </div>
                 </div>
             </div>
 
             <div class="d-flex mt-4 ">
-                <button type="button" class="btn btn-outline-danger mx-2 mr-auto" onclick="javascripe:history.back(-1);">返回</a>
-                <button type="submit" id="save" class="btn btn-outline-info mx-2 ">保存</button>
-                <button type="submit" id="publish" class="btn btn-outline-success mx-2">发布</button>
+                <button type="button" class="btn btn-outline-danger mx-2 mr-auto"
+                    onclick="javascripe:history.back(-1);">返回</a>
+                    <button type="submit" id="save" class="btn btn-outline-info mx-2 ">保存</button>
+                    <button type="submit" id="publish" class="btn btn-outline-success mx-2">发布</button>
             </div>
             <input type="hidden" name="isPublished">
             <input type="hidden" name="id" th:value="${blog.id}">
@@ -120,11 +131,11 @@
     <script>
         var testEditor;
 
-        $('#save').click(function() {
+        $('#save').click(function () {
             $('[name="isPublished"]').val(false);
             $('#blog-form').submit();
         })
-        $('#publish').click(function() {
+        $('#publish').click(function () {
             $('[name="isPublished"]').val(true);
             $('#blog-form').submit();
         })
