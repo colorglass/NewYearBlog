@@ -1,6 +1,8 @@
 package com.newyearblog.blog.controller;
 
 import com.newyearblog.blog.service.BlogService;
+import com.newyearblog.blog.service.TagService;
+import com.newyearblog.blog.service.TypeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +18,21 @@ public class FBlogController {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private TypeService typeService;
+    @Autowired
+    private TagService tagService;
 
     @RequestMapping("/index")
     public String indexPage(
-            @PageableDefault(size = 6, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
-            Model model) {
-        model.addAttribute("page", blogService.filteListBlog(null, null, null, true, pageable));
+            @PageableDefault(size = 6, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable, Model model,
+            String title, Long typeId, Long tagId) {
+        model.addAttribute("page", blogService.filteListBlog(title, typeId, tagId, true, pageable));
+        model.addAttribute("types", typeService.getAllTypes());
+        model.addAttribute("tags", tagService.getAllTags());
+        model.addAttribute("typeFilter", typeId);
+        model.addAttribute("tagFilter", tagId);
+        model.addAttribute("titleFilter", title);
         return "index";
     }
 
@@ -30,5 +41,5 @@ public class FBlogController {
         model.addAttribute("blog", blogService.getBlog(id));
         return "blog";
     }
-    
+
 }
