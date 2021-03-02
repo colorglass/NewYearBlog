@@ -65,12 +65,12 @@
 
             <div class="col d-md-none mb-3">
                 <div class="dropdown">
-                    <a th:href="@{/archive/{year}(year=${years.get(0)})}" class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                    <a th:href="@{/archive/{year}(year=${currentYear})}" class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="h1" th:text="${years.get(0)}">2021-02</span>
+                        <span class="h1" th:text="${currentYear}">2021-02</span>
                     </a>
-                    <div th:each="year:${years}" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a th:href="@{/archive/{year}(year=${year})}" class="dropdown-item" href="#"><span class="h3" th:text="${year}">2021-01</span></a>
+                    <div  class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a th:each="year:${years}" th:href="@{/archive/{year}(year=${year})}" class="dropdown-item" href="#"><span class="h3" th:text="${year}">2021-01</span></a>
                     </div>
                 </div>
             </div>
