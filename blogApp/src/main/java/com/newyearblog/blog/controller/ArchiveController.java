@@ -16,7 +16,8 @@ public class ArchiveController {
     @RequestMapping("/archive")
     public String toArchive(Map<String, Object> map){
         handleYear(map);
-        handleBlog(map, archiveService.getAllYear().get(0));
+        int year = archiveService.getAllYear().get(0);
+        handleBlog(map, year);
         return "archive";
     }
 
@@ -32,6 +33,7 @@ public class ArchiveController {
     }
 
     private void handleBlog(Map<String, Object> map, int year){
+        map.put("currentYear", year);
         map.put("blogOne", archiveService.getBlogByYearAndMonth(year, 1));
         map.put("blogTwo", archiveService.getBlogByYearAndMonth(year, 2));
         map.put("blogThree", archiveService.getBlogByYearAndMonth(year, 3));
