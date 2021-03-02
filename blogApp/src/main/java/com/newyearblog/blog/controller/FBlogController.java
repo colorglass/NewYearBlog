@@ -38,6 +38,8 @@ public class FBlogController {
 
     @RequestMapping("/blog")
     public String blogPage(@RequestParam Long id, Model model) {
+        model.addAttribute("types", typeService.getAllTypes());
+        model.addAttribute("tags", tagService.getAllTags());
         model.addAttribute("blog", blogService.getBlog(id));
         return "blog";
     }

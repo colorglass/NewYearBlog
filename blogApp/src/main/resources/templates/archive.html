@@ -29,27 +29,58 @@
 
         <div class="collapse navbar-collapse justify-content-around" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item mr-2">
-                    <a class="nav-link" href="#">首页</a>
-                </li>
-                <li class="nav-item mr-2">
-                    <a class="nav-link" href="#">分类</a>
-                </li>
                 <li class="nav-item active mr-2">
-                    <a class="nav-link" href="#">归档</a>
+                    <a class="nav-link" href="#" th:href="@{/index}">首页</a>
+                </li>
+                <li class="nav-item mr-2">
+                    <a class="nav-link" role="button" data-toggle="collapse" href="#search">搜索</a>
+                </li>
+                <li class="nav-item mr-2">
+                    <a class="nav-link" href="#" th:href="@{/archive}">归档</a>
                 </li>
                 <li class="nav-item mr-2">
                     <a class="nav-link" href="#">关于我</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input type="search" class="form-control" placeholder="search...">
-                <div class="input-group-append">
-                    <button class="btn" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
-                </div>
-            </form>
         </div>
     </nav>
+    <div class="collapse mb-2 border py-3" id="search">
+        <form class="form-inline w-100" action="#" method="GET" th:action="@{/index}">
+            <div class="col-md-4 col-6">
+                <h5 class="mb-3 text-muted">选择分类</h5>
+                <select class="custom-select w-100" name="typeId" id="type"
+                    aria-label="Example select with button addon">
+                    <div>
+                        <option value="" th:selected="${typeFilter==null}">任何分类</option>
+                    </div>
+                    <div th:each="type : ${types}">
+                        <option th:value="${type.id}" th:text="${type.typeName}" th:selected="${typeFilter==type.id}">
+                            One</option>
+                    </div>
+                </select>
+            </div>
+            <div class="col-md-4 col-6">
+                <h5 class="mb-3 text-muted">选择标签</h5>
+                <select class="custom-select w-100" name="tagId" id="tag" aria-label="Example select with button addon">
+                    <div>
+                        <option value="" th:selected="${tagFilter==null}">任何标签</option>
+                    </div>
+                    <div th:each="tag : ${tags}">
+                        <option th:value="${tag.id}" th:text="${tag.tagName}" th:selected="${tagFilter==tag.id}">One
+                        </option>
+                    </div>
+                </select>
+            </div>
+            <div class="col-md-4 col-6 mt-md-0 mt-4">
+                <h5 class="mb-3 text-muted">输入标题</h5>
+                <input class="form-control w-100" type="text" name="title" placeholder="任何标题" th:value="${titleFilter}"
+                    id="title">
+            </div>
+            <div class="col-6 d-md-flex mt-4">
+                <button type="submit" class="btn btn-outline-secondary">搜索</button>
+            </div>
+        </form>
+    </div>
 
 
     <!-- content -->

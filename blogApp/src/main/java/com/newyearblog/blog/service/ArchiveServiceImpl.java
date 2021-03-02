@@ -6,22 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @Service
 public class ArchiveServiceImpl implements ArchiveService {
     @Autowired
     private BlogRepository blogRepository;
 
-
     @Override
     public List<Integer> getAllYear() {
-        return blogRepository.getAllYear();
-    }
-
-    @Override
-    public List<Blog> getBlogByYear(int year) {
-        return blogRepository.getBlogByYear(year);
+        List<Integer> yearList = blogRepository.getAllYear().stream().distinct().collect(Collectors.toList());
+        return yearList;
     }
 
     @Override
