@@ -41,7 +41,7 @@
                     <a class="nav-link" href="#" th:href="@{/archive}">归档</a>
                 </li>
                 <li class="nav-item mr-2">
-                    <a class="nav-link" href="#">关于我</a>
+                    <a class="nav-link" href="#" th:href="@{/about}">关于我</a>
                 </li>
             </ul>
         </div>
@@ -87,8 +87,8 @@
 
 
     <!-- content -->
-    <div class="container-lg d-flex flex-column align-items-center p-5">
-        <div class="row row-cols-1 w-75">
+    <div class="container-lg d-flex flex-column align-items-center px-lg-5 py-5 min-vh-100">
+        <div class="row row-cols-1 w-100" th:if="${page}" style="max-width: 800px;">
             <div class="col mb-5" th:each="blog : ${page.content}">
                 <div class="card shadow-sm ">
                     <div class="card-header bg-white d-flex justify-content-center">
@@ -122,52 +122,55 @@
             </div>
         </div>
 
-        <!-- pagination -->
-        <nav aria-label="Page navigation example" th:if="${page.totalPages} > 0">
-            <ul class="pagination">
-                <li class="page-item " th:unless="${page.first}">
-                    <a class="page-link" href="#" th:href="@{/index(page=${page.number}-1)}"
-                        aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:if="${page.number} > 2">
-                    <a class="page-link " th:href="@{/index(page=0)}" href="#">1</a>
-                </li>
-                <li class="page-item disabled" th:if="${page.number} > 3">
-                    <a class="page-link text-monospace" href="#">...</a>
-                </li>
+        <h4 class="text-info mt-5" th:unless="${page}">抱歉，该页面暂时无内容</h4>
 
-                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number-2,page.number-1)}"
-                    th:if="${pageNumber} >= 0">
-                    <a class="page-link " href="#" th:text="${pageNumber}+1"
-                        th:href="@{/index(page=${pageNumber})}">1</a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link " href="#" th:text="${page.number}+1"
-                        th:href="@{/index(page=${page.number})}">2</a>
-                </li>
-                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number+1,page.number+2)}"
-                    th:if="${pageNumber lt page.totalPages}">
-                    <a class="page-link " href="#" th:text="${pageNumber}+1"
-                        th:href="@{/index(page=${pageNumber})}">3</a>
-                </li>
-
-                <li class="page-item disabled" th:if="${page.totalPages-page.number}>4">
-                    <a class="page-link text-monospace" href="#">...</a>
-                </li>
-                <li class="page-item" th:if="${page.totalPages-page.number}>3">
-                    <a class="page-link " href="#" th:href="@{/index(page=${page.totalPages-1})}"
-                        th:text="${page.totalPages}">3</a>
-                </li>
-                <li class="page-item" th:unless="${page.last}">
-                    <a class="page-link" href="#" th:href="@{/index(page=${page.number}+1)}"
-                        aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <div th:if="${page}">
+            <nav aria-label="Page navigation example" th:if="${page.totalPages} > 0">
+                <ul class="pagination">
+                    <li class="page-item " th:unless="${page.first}">
+                        <a class="page-link" href="#" th:href="@{/index(page=${page.number}-1)}"
+                            aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${page.number} > 2">
+                        <a class="page-link " th:href="@{/index(page=0)}" href="#">1</a>
+                    </li>
+                    <li class="page-item disabled" th:if="${page.number} > 3">
+                        <a class="page-link text-monospace" href="#">...</a>
+                    </li>
+    
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number-2,page.number-1)}"
+                        th:if="${pageNumber} >= 0">
+                        <a class="page-link " href="#" th:text="${pageNumber}+1"
+                            th:href="@{/index(page=${pageNumber})}">1</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link " href="#" th:text="${page.number}+1"
+                            th:href="@{/index(page=${page.number})}">2</a>
+                    </li>
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(page.number+1,page.number+2)}"
+                        th:if="${pageNumber lt page.totalPages}">
+                        <a class="page-link " href="#" th:text="${pageNumber}+1"
+                            th:href="@{/index(page=${pageNumber})}">3</a>
+                    </li>
+    
+                    <li class="page-item disabled" th:if="${page.totalPages-page.number}>4">
+                        <a class="page-link text-monospace" href="#">...</a>
+                    </li>
+                    <li class="page-item" th:if="${page.totalPages-page.number}>3">
+                        <a class="page-link " href="#" th:href="@{/index(page=${page.totalPages-1})}"
+                            th:text="${page.totalPages}">3</a>
+                    </li>
+                    <li class="page-item" th:unless="${page.last}">
+                        <a class="page-link" href="#" th:href="@{/index(page=${page.number}+1)}"
+                            aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 
     <!-- footer -->

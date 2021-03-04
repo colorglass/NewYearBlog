@@ -23,7 +23,7 @@ public class FBlogController {
     @Autowired
     private TagService tagService;
 
-    @RequestMapping("/index")
+    @RequestMapping(value = { "/index", "/" })
     public String indexPage(
             @PageableDefault(size = 6, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable, Model model,
             String title, Long typeId, Long tagId) {
@@ -42,6 +42,14 @@ public class FBlogController {
         model.addAttribute("tags", tagService.getAllTags());
         model.addAttribute("blog", blogService.getBlog(id));
         return "blog";
+    }
+
+    // 关于我页
+    @RequestMapping("/about")
+    public String aboutPage(Model model) {
+        model.addAttribute("types", typeService.getAllTypes());
+        model.addAttribute("tags", tagService.getAllTags());
+        return "about";
     }
 
 }
