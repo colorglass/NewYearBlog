@@ -41,7 +41,6 @@ public class CommentServiceImpl implements CommentService {
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         }, PageRequest.of(page, 10));
-        System.out.println(comments.getContent().size());
         return comments;
     }
 
@@ -62,7 +61,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int getCommentCount() {
-        System.out.println(commentRepository);
         List<Comment> comments = commentRepository.findAll();
         return comments.size();
     }

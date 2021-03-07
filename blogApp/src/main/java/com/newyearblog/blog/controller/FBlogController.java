@@ -38,6 +38,11 @@ public class FBlogController {
 
     @RequestMapping("/blog")
     public String blogPage(@RequestParam Long id, Model model) {
+
+        if (blogService.getBlog(id) == null) {
+            return "error/404";
+        }
+
         model.addAttribute("types", typeService.getAllTypes());
         model.addAttribute("tags", tagService.getAllTags());
         model.addAttribute("blog", blogService.getBlog(id));

@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javassist.NotFoundException;
-
 @Service
 @Transactional
 public class BlogServiceImpl implements BlogService {
@@ -29,8 +27,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog deleteBlog(Long id) {
-        Blog blog = blogRepository.getOne(id);
-        if (blog != null) {
+        Blog blog = null;
+        if (blogRepository.existsById(id)) {
+            blog = blogRepository.findById(id).get();
             blogRepository.deleteById(id);
         }
         return blog;
@@ -38,21 +37,21 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog updateBlog(Long id, Blog blog) {
-        Blog _blog = blogRepository.getOne(id);
-        if (_blog == null) {
-            try {
-                throw new NotFoundException("该博文不存在");
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+        Blog _blog = null;
+        if (blogRepository.existsById(id)) {
+            _blog = blogRepository.getOne(id);
+            BeanUtils.copyProperties(blog, _blog);
         }
-        BeanUtils.copyProperties(blog, _blog);
         return _blog;
     }
 
     @Override
     public Blog getBlog(Long id) {
-        return blogRepository.getOne(id);
+        Blog blog = null;
+        if (blogRepository.existsById(id)) {
+            blog = blogRepository.getOne(id);
+        }
+        return blog;
     }
 
     @Override

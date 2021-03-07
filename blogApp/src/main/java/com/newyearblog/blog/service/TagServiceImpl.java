@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javassist.NotFoundException;
 
 @Service
 @Transactional
@@ -24,35 +23,36 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag saveTag(Tag tag) {
-
         return tagRepository.save(tag);
     }
 
     @Override
     public Tag deletTag(Long id) {
-        Tag tag = tagRepository.getOne(id);
-        tagRepository.deleteById(id);
+        Tag tag = null;
+        if (tagRepository.existsById(id)) {
+            tag = tagRepository.findById(id).get();
+            tagRepository.deleteById(id);
+        }
         return tag;
     }
 
     @Override
     public Tag updateTag(Long id, Tag tag) {
-        Tag _tag = tagRepository.getOne(id);
-        if (_tag == null) {
-            try {
-                throw new NotFoundException("该标签不存在");
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+        Tag _tag = null;
+        if(tagRepository.existsById(id)){
+            _tag = tagRepository.getOne(id);
+            BeanUtils.copyProperties(tag, _tag);
         }
-        BeanUtils.copyProperties(tag, _tag);
         return _tag;
     }
 
     @Override
     public Tag getTag(Long id) {
-
-        return tagRepository.getOne(id);
+        Tag tag = null;
+        if (tagRepository.existsById(id)) {
+            tag = tagRepository.getOne(id);
+        }
+        return tag;
     }
 
     @Override

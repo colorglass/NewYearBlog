@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javassist.NotFoundException;
 
 @Service
 @Transactional
@@ -29,28 +28,31 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public Type deletType(Long id) {
-        Type type = typeRepository.getOne(id);
-        typeRepository.deleteById(id);
+        Type type = null;
+        if (typeRepository.existsById(id)) {
+            type = typeRepository.findById(id).get();
+            typeRepository.deleteById(id);
+        }
         return type;
     }
 
     @Override
     public Type updateType(Long id, Type type) {
-        Type _type = typeRepository.getOne(id);
-        if (_type == null) {
-            try {
-                throw new NotFoundException("该分类不存在");
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+        Type _type = null;
+        if(typeRepository.existsById(id)){
+            _type = typeRepository.getOne(id);
+            BeanUtils.copyProperties(type, _type);
         }
-        BeanUtils.copyProperties(type, _type);
         return _type;
     }
 
     @Override
     public Type getType(Long id) {
-        return typeRepository.getOne(id);
+        Type type = null;
+        if (typeRepository.existsById(id)) {
+            type = typeRepository.getOne(id);
+        }
+        return type;
     }
 
     @Override
