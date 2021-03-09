@@ -15,4 +15,5 @@ public interface BlogRepository extends JpaRepository<Blog, Long>,JpaSpecificati
     @Query(value = "SELECT * from blog where year(update_time) = ? and month(update_time) = ? ORDER BY update_time DESC",
             nativeQuery = true)
     List<Blog> getBlogByYearAndMonth(int year, int month);
+
 }

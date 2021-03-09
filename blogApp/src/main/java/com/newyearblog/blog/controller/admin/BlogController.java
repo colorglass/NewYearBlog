@@ -64,8 +64,8 @@ public class BlogController {
     @PostMapping("/blog/save")
     public String saveBlog(@RequestParam Long typeId, String tagIds, Blog blog, HttpSession session,
             RedirectAttributes attributes) {
-        if (blog.getTitle() == null) {
-            attributes.addFlashAttribute("message", "标题或类型为空！");
+        if (blog.getTitle() == null || "".equals(blog.getTitle())) {
+            attributes.addFlashAttribute("message", "标题或分类为空！");
             attributes.addFlashAttribute("blog", blog);
             return "redirect:/admin/blog/new";
         }

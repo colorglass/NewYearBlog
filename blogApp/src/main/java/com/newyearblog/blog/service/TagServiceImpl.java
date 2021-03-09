@@ -3,7 +3,9 @@ package com.newyearblog.blog.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.newyearblog.blog.entity.Blog;
 import com.newyearblog.blog.entity.Tag;
+import com.newyearblog.blog.repository.BlogRepository;
 import com.newyearblog.blog.repository.TagRepository;
 
 import org.springframework.beans.BeanUtils;
@@ -20,6 +22,8 @@ public class TagServiceImpl implements TagService {
 
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private BlogRepository blogRepository;
 
     @Override
     public Tag saveTag(Tag tag) {
@@ -31,6 +35,13 @@ public class TagServiceImpl implements TagService {
         Tag tag = null;
         if (tagRepository.existsById(id)) {
             tag = tagRepository.findById(id).get();
+            List<Blog> blogs = blogRepository.findAll(Blog.filter(null, null, tag.getId(), false));
+            for(Blog blog : blogs){
+                List<Tag> tagList = blog.getTags();
+                tagList.remove(tag);
+                blog.setTags(tagList);
+                blogRepository.save(blog);
+            }
             tagRepository.deleteById(id);
         }
         return tag;

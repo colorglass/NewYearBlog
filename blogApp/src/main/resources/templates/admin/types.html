@@ -89,10 +89,13 @@
                                 <div class="d-flex">
                                     <a href="#" th:href="@{/admin/types/update(id=${type.id})}"
                                         class="btn btn-outline-secondary mr-2">修改</a>
-                                    <form th:action="@{/admin/types/del}" action="#" method="POST" class="inline-form">
-                                        <input type="hidden" name="id" th:value="${type.id}">
-                                        <button type="submit" class="btn btn-outline-danger">删除</a>
-                                    </form>
+                                    <div th:if="${#lists.isEmpty(type.blogs)}">
+                                        <form th:action="@{/admin/types/del}" action="#" method="POST"
+                                            class="inline-form">
+                                            <input type="hidden" name="id" th:value="${type.id}">
+                                            <button type="submit" class="btn btn-outline-danger">删除</a>
+                                        </form>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
