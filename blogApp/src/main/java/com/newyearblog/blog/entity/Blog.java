@@ -55,9 +55,7 @@ public class Blog {
 
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", title='" + getTitle() + "'" + ", updateTime='" + getUpdateTime() + "'"
-                + ", isPublished='" + getIsPublished() + "'" + ", type='" + getType() + "'" + ", tags='" + getTags()
-                + "'" + ", user='" + getUser() + "'" + ", comments='" + getComments() + "'" + "}";
+        return "{" + " id='" + getId() + "'" + ", title='" + getTitle() + "'" + "}";
     }
 
     public static Specification<Blog> filter(String title, Long typeId, Long tagId, Boolean isPublished) {

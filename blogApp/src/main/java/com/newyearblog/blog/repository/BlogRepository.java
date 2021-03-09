@@ -12,8 +12,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long>,JpaSpecificati
     @Query(value = "SELECT  year(update_time) from blog ORDER BY update_time DESC", nativeQuery = true)
     List<Integer> getAllYear();
 
-    @Query(value = "SELECT * from blog inner join user " +
-            "on user_id where year(update_time) = ? and month(update_time) = ? ORDER BY update_time DESC",
+    @Query(value = "SELECT * from blog where year(update_time) = ? and month(update_time) = ? ORDER BY update_time DESC",
             nativeQuery = true)
     List<Blog> getBlogByYearAndMonth(int year, int month);
 }

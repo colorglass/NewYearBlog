@@ -30,7 +30,6 @@ public class ArchiveController {
             model.addAttribute("currentYear", yearList.get(0));
             model.addAttribute("arcBlogs", archiveService.getArcBlogs(yearList.get(0)));
         }
-
         // 搜索框用的
         model.addAttribute("types", typeService.getAllTypes());
         model.addAttribute("tags", tagService.getAllTags());
